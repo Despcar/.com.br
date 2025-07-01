@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Despcar - Atendimento</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<style>
+    /* Reset para evitar overflow horizontal */
+    html, body {
+      width: 100%;
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #ffffff;
+      color: #081024;
+      position: relative;
+    }
+
+    /* Container principal para limitar largura */
+    .main-container {
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    .hero {
+      background-image: url('img/BG-DESPCAR.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      min-height: 60vh;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      max-width: 1200px;
+      width: 100%;
+      gap: 40px;
+      margin: 0 auto;
+      box-sizing: border-box;
+    }
+
+    .hero-text {
+      flex: 1;
+      min-width: 300px;
+      padding: 0 15px;
+      box-sizing: border-box;
+    }
+
+    .hero-text img {
+      height: 40px;
+      margin-bottom: 15px;
+      max-width: 100%;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(20px, 4vw, 28px);
+      font-weight: bold;
+      color: #081024;
+      margin-bottom: 20px;
+      line-height: 1.3;
+    }
+
+    .hero-text p {
+      font-size: clamp(14px, 2.5vw, 16px);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .hero-img {
+      flex: 1;
+      min-width: 300px;
+      display: flex;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+
+    .hero-img img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      object-fit: contain;
+    }
+
+    .container {
+      padding: 60px 20px;
+      background-color: #081024;
+      color: white;
+      text-align: center;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    h2 {
+      font-size: clamp(20px, 4vw, 24px);
+      font-weight: bold;
+      margin-bottom: 40px;
+      padding: 0 15px;
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 15px;
+      box-sizing: border-box;
+    }
+
+    .card {
+      background-color: transparent;
+      border: 2px solid white;
+      border-radius: 8px;
+      padding: 30px 20px;
+      width: calc(25% - 20px);
+      min-width: 220px;
+      flex-grow: 1;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-sizing: border-box;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 10px #ffd700;
+    }
+
+    .card-icon {
+      font-size: 40px;
+      color: #ffd700;
+      margin-bottom: 15px;
+    }
+
+    .card-text {
+      font-size: clamp(12px, 2vw, 14px);
+      line-height: 1.4;
+    }
+
+    .highlight-section {
+      text-align: center;
+      padding: 60px 20px;
+      background-color: #fff;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .highlight-section h2 {
+      font-size: clamp(20px, 4vw, 24px);
+      font-weight: bold;
+      color: #081024;
+    }
+
+    .highlight-section p {
+      color: #555;
+      margin-top: 5px;
+      font-size: clamp(14px, 2.5vw, 16px);
+      padding: 0 15px;
+    }
+
+    .highlight-cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 40px;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 15px;
+      box-sizing: border-box;
+    }
+
+    .highlight-card {
+      width: calc(33.333% - 40px);
+      min-width: 200px;
+      flex-grow: 1;
+      box-sizing: border-box;
+    }
+
+    .highlight-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      object-fit: cover;
+      aspect-ratio: 1/1;
+    }
+
+    .highlight-card p {
+      font-weight: bold;
+      margin-top: 10px;
+      font-size: clamp(14px, 2vw, 16px);
+    }
+
+    /* Botão WhatsApp flutuante */
+    #whatsapp-float {
+      position: fixed;
+      width: 60px;
+      height: 60px;
+      bottom: 20px;
+      right: 20px;
+      border-radius: 50%;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pulse 2s infinite;
+      text-decoration: none;
+      box-shadow: none;
+      background: transparent;
+    }
+
+    #whatsapp-float img {
+      width: 100%;
+      height: auto;
+      max-width: 36px;
+      max-height: 36px;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .whatsapp-button {
+      display: inline-flex;
+      align-items: center;
+      background-color: #25D366;
+      color: white;
+      font-weight: bold;
+      padding: 12px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      transition: background 0.3s;
+      font-size: clamp(14px, 2vw, 16px);
+      box-sizing: border-box;
+    }
+
+    .whatsapp-button:hover {
+      background-color: #1ebe5d;
+    }
+    
+    .whatsapp-button img {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+    }
+
+    /* Rodapé */
+    .footer {
+      background-color: #081024;
+      color: white;
+      padding: 60px 20px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      align-items: flex-start;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+      box-sizing: border-box;
+    }
+
+    .footer-column {
+      flex: 1;
+      min-width: 250px;
+      box-sizing: border-box;
+    }
+
+    .footer-column h3 {
+      color: #FFD700;
+      font-size: clamp(16px, 3vw, 20px);
+      margin-bottom: 15px;
+    }
+
+    .footer-column p {
+      margin: 10px 0;
+      font-size: clamp(14px, 2vw, 16px);
+      line-height: 1.5;
+    }
+
+    .map-container {
+      width: 100%;
+      height: 0;
+      padding-bottom: 75%;
+      position: relative;
+      margin-top: 15px;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .map-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* Responsividade */
+    @media screen and (max-width: 768px) {
+      .hero {
+        padding: 30px 15px;
+        min-height: auto;
+      }
+      
+      .card {
+        width: calc(50% - 20px);
+      }
+      
+      .highlight-card {
+        width: calc(50% - 40px);
+      }
+    }
+
+    @media screen and (max-width: 576px) {
+      .hero-content {
+        flex-direction: column;
+        gap: 20px;
+      }
+      
+      .hero-text {
+        text-align: center;
+        padding: 0 10px;
+      }
+      
+      .card, .highlight-card {
+        width: 100%;
+        max-width: 350px;
+        margin: 0 auto;
+      }
+      
+      .footer-column {
+        min-width: 100%;
+        text-align: center;
+      }
+      
+      #whatsapp-float {
+        width: 50px;
+        height: 50px;
+        bottom: 15px;
+        right: 15px;
+      }
+    }
+</style>
+</head>
+<body>
+<div class="main-container">
+  <!-- Seção Hero -->
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <img alt="Logo Despcar" src="img/logo.png"/>
+        <h1>Assessoria especializada há 8 anos em CNH cassada ou suspensa/lei seca.<br/>Regularize já conosco!</h1>
+        <p>Profissionais experientes prontos para resolver sua situação de CNH cassada ou suspensa. Serviço de assessoria eficaz. Não fique sem dirigir, consulte a sua situação gratuitamente</p>
+        <a class="whatsapp-button" href="https://wa.me/5511919454166?text=Ol%C3%A1%21%20Tenho%20interesse%20nos%20servi%C3%A7os%20de%20recupera%C3%A7%C3%A3o%20de%20CNH.%20Poderia%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F" target="_blank">
+          <img alt="WhatsApp" src="https://cdn-icons-png.flaticon.com/512/733/733585.png"/>
+          FALE NO WHATSAPP
+        </a>
+      </div>
+      <div class="hero-img">
+        <img alt="" src="img/hero.png"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- Seção de Atendimento -->
+  <div class="container">
+    <h2>O que esperar da Despcar no seu atendimento:</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-gem"></i></div>
+        <div class="card-text">Profissionais experientes</div>
+      </div>
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-check-square"></i></div>
+        <div class="card-text">Solução rápida, segura e eficaz</div>
+      </div>
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-handshake"></i></div>
+        <div class="card-text">Atendimento personalizado</div>
+      </div>
+      <div class="card">
+        <div class="card-icon"><i class="fas fa-id-card"></i></div>
+        <div class="card-text">Recupere seu direito de dirigir</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Seção de Imagens -->
+  <div class="highlight-section">
+    <h2>Recupere seu direito de dirigir com a Despcar</h2>
+    <p>A Despcar conta com profissionais especializados para cada serviço.</p>
+    <div class="highlight-cards">
+      <div class="highlight-card">
+        <img alt="Assessoria CNH" src="img/CNH-3.jpg"/>
+        <p><strong>Assessoria Especializada em CNH</strong></p>
+      </div>
+      <div class="highlight-card">
+        <img alt="Recupere sua CNH" src="img/CNH-1.jpg"/>
+        <p><strong>Recupere sua CNH</strong></p>
+      </div>
+      <div class="highlight-card">
+        <img alt="Auxílio Rápido" src="img/CNH-2.jpg"/>
+        <p><strong>Auxílio Rápido e Eficaz</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Seção das 3 opções - POSICIONADAS MAIS ACIMA -->
+  <div style="background-color: #f8f9fa; padding: 30px 20px 40px; text-align: center; margin-top: -20px;">
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; max-width: 1000px; margin: 0 auto;">
+      <!-- Opção 1 -->
+      <a href="https://wa.me/5511919454166?text=Olá! Gostaria de uma consulta sobre minha CNH cassada/suspensa." 
+         style="background-color: #25D366; color: white; border-radius: 8px; padding: 20px; width: calc(33.333% - 20px); min-width: 220px; text-decoration: none; text-align: center; display: flex; flex-direction: column; align-items: center;"
+         target="_blank">
+        <i class="fas fa-id-card" style="font-size: 36px; margin-bottom: 15px;"></i>
+        <span style="font-weight: bold; font-size: clamp(16px, 2.5vw, 18px);">Consulta sobre CNH</span>
+      </a>
+      
+      <!-- Opção 2 -->
+      <a href="https://wa.me/5511919454166?text=Olá! Preciso de ajuda com recursos de multas." 
+         style="background-color: #25D366; color: white; border-radius: 8px; padding: 20px; width: calc(33.333% - 20px); min-width: 220px; text-decoration: none; text-align: center; display: flex; flex-direction: column; align-items: center;"
+         target="_blank">
+        <i class="fas fa-file-invoice-dollar" style="font-size: 36px; margin-bottom: 15px;"></i>
+        <span style="font-weight: bold; font-size: clamp(16px, 2.5vw, 18px);">Recursos de Multas</span>
+      </a>
+      
+      <!-- Opção 3 -->
+      <a href="https://wa.me/5511919454166?text=Olá! Quero regularizar minha pontuação na CNH." 
+         style="background-color: #25D366; color: white; border-radius: 8px; padding: 20px; width: calc(33.333% - 20px); min-width: 220px; text-decoration: none; text-align: center; display: flex; flex-direction: column; align-items: center;"
+         target="_blank">
+        <i class="fas fa-chart-line" style="font-size: 36px; margin-bottom: 15px;"></i>
+        <span style="font-weight: bold; font-size: clamp(16px, 2.5vw, 18px);">Regularização de Pontuação</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Rodapé -->
+  <div class="footer">
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3>📞 Telefones</h3>
+        <p>📱 (11) 91945-4166</p>
+        <p>☎️ (11) 98528-7337</p>
+      </div>
+      <div class="footer-column">
+        <h3>🕒 Horário de funcionamento</h3>
+        <p>Segunda à Sexta:</p>
+        <p>08h00 às 18h00</p>
+      </div>
+      <div class="footer-column">
+        <h3>📍 Endereço:</h3>
+        <p>
+          Rua Alexandre Dumas, 1369 – LOJA 1 – Chácara Santo Antônio,<br/> São Paulo – SP, 04717-003
+        </p>
+        <div class="map-container">
+          <iframe allowfullscreen="" loading="lazy" src="https://www.google.com/maps?q=Rua+Alexandre+Dumas,+1369&amp;output=embed"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Botão WhatsApp -->
+<a aria-label="Fale no WhatsApp" href="https://wa.me/5511919454166?text=Ol%C3%A1%21%20Tenho%20interesse%20nos%20servi%C3%A7os%20de%20recupera%C3%A7%C3%A3o%20de%20CNH.%20Poderia%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F" id="whatsapp-float" target="_blank">
+  <img alt="WhatsApp" src="img/whatsapp-icon.png"/>
+</a>
+</body>
+</html>
